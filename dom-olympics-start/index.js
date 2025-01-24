@@ -15,7 +15,6 @@ headerText.innerHTML += "<span>Brendon</span><header>wrote the JavaScript</heade
 
     var messages = document.getElementsByClassName("#messages")
 
-
     function clear() {
         messages.parentNode.removeChild(messages);
     }
