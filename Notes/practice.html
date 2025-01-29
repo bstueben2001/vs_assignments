@@ -2,15 +2,34 @@
     <html>
         <head>
             <link rel="stylesheet" href="styles.css">
-            <script src="index.js" defer></script>
+            <script src="practice.js" defer></script>
         </head>
         <body>
             
             <h1> Forms Part 1 </h1>
         
             <form name="my-form"> 
-                <input type="text" name="firstName"/>
-                <input type="text" name="lastName"/>
+                <!-- <input type="text" placeholder="First Name" name="firstName" required/>
+                <input type="text" placeholder="Last name" name="lastName" required/>
+                <input type="number" placeholder="age" name="age" required/>
+                <input type="tel" placeholder="Phone Number" name="telephone"/>
+                <input type="password" placeholder="Password" name="password"/>
+                <input type="date" placeholder="Date" name="date"/>
+                <input type="color" placeholder="Color" name="color"/> -->
+                Male: <input type="radio" name="gender" value="Male" required/>
+                Female: <input type="radio" name="gender" value="Female" required/>
+                Movies: <input type="checkbox" value="Movies" name="entertain"/>
+                Games: <input type="checkbox" value="Games" name="entertain"/>
+
+                <select name="city">
+                    <option value="Paris">Paris</option>
+                    <option value="New York">New York</option>
+                    <option value="Chicago">Chicago</option>
+                </select>
+
+
+
+
                 <button>Submit</button>
             </form>
 
