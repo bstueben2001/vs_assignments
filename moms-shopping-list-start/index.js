@@ -16,8 +16,8 @@ const anchor = document.getElementById("list")
             let item = document.createElement("p")
                 item.innerHTML = itemName
                 // item.classList.add("li")
-                // item.style.marginBottom = "10px"
-                // item.style.textAlign = "center"
+                item.style.marginBottom = "10px"
+                item.style.textAlign = "center"
 
             let editButton = document.createElement("button")
                 editButton.innerHTML = "edit"
