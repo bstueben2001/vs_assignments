@@ -8,25 +8,43 @@ const anchor = document.getElementById("list")
         form.title.value = ""
 
         let newLi = document.createElement("li")
+            // newLi.style.disply = "flex"
+            // newLi.style.flexDirection = "column"
+            // newLi.style.listStyleType = "none"
+            // newLi.style.margin = "10px"
 
-            let item = document.createElement("span")
+            let item = document.createElement("p")
                 item.innerHTML = itemName
+                // item.classList.add("li")
+                // item.style.marginBottom = "10px"
+                // item.style.textAlign = "center"
 
             let editButton = document.createElement("button")
                 editButton.innerHTML = "edit"
-                    //add styles for 'b1' class
                     editButton.addEventListener("click",function(){
-                        console.log("This listener works")
-                        //input field???
-                        
-
-
+                        console.log("Edit button responding")
+                        const origText = item.innerHTML                         //saves original text
+                        item.innerHTML = ""                                     //clears original text from span
+                        const inputBox = document.createElement("input")        //creates input box
+                        inputBox.value = origText                               //adds original text to inputBox
+                    const saveButton = document.createElement("button")         //saveButton creation
+                        // newLi.remove(editButton)
+                        // newLi.remove(clearButton)
+                        // newLi.append(saveButton)
+                    saveButton.innerHTML = "Save"                               //text label
+                    saveButton.addEventListener("click",function(){             //saveButton function
+                        item.innerHTML = inputBox.value                         //takes whatever is in the updated text and applies it to item.innerHTML content
+                        // newLi.append(editButton)
+                        // newLi.append(clearButton)
+                        // newLi.remove(saveButton)
                     })
+                })
+                
 
             let clearButton = document.createElement("button")
                 clearButton.innerHTML = "X"
                 clearButton.addEventListener("click",function(){
-                    console.log("it worked")
+                    console.log("X button responding")
                     newLi.remove()
                     })
 
@@ -37,10 +55,18 @@ const anchor = document.getElementById("list")
         anchor.appendChild(newLi)
     })
 
-const oldButtons = document.querySelectorAll(".button2")
-oldButtons.forEach(button => {
+const oldClearButtons = document.querySelectorAll(".button2")
+oldClearButtons.forEach(button => {
     button.addEventListener("click", function(){
         const li = button.closest("li")
         li.remove()
-    })
+        })
+})
+
+const oldEditButtons = document.querySelectorAll(".button1")
+oldEditButtons.forEach(button => {
+    button.addEventListener("click", function(){
+        console.log("Old edits responding")
+        //replace text with input field + save button
+        })
 })
