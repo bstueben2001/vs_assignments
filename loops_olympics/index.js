@@ -12,8 +12,29 @@
 //     console.log(fruit[i])
 // }
 
+
+// Bronze 1.
+let numbers = []
+
+for (let i = 0; i < 10; i++) {
+numbers.push(i) 
+}
+console.log(numbers)
+
+
+// Bronze 2.
 for(let i = 0; i <= 100; i++){
-    if([i] % 0){
-        console.log([i])
+    if(i % 2 === 0){
+        console.log(i)
     }
 }
+
+// Bronze 3. 
+const fruit = ["banana", "orange", "apple", "kiwi", "pear", "peach"]
+
+let oddFruit = []
+
+for (let i = 0; i < fruit.length; i += 2) {
+oddFruit.push(fruit[i])
+} 
+console.log(oddFruit)
