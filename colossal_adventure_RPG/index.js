@@ -11,123 +11,114 @@ let player = { //establishes player object
     name: playerName,
     hp: 50,
     living: true,
-    inv: true
+    inv: inventoryArray
 }
 
+let inventoryArray = []
 
+const enemyArray = [ //establishes enemy objects
+    {enemyName: "John Pork", enemyHP: 10, enemySpell: "Pork Chop"},
+    {enemyName: "Chicken Jockey", enemyHP: 10, enemySpell: "Impossible hitbox"},
+    {enemyName: "Zalgaron, the Father of Fear", enemyHP: 10, enemySpell: "Scorpion on your ankle in your best friend's basement back in 2020"}
+]
 
+const lootPool = ["A half of a ham and cheese sandwich", "Solace in the undeniable truth and inevitability of the universe's demise", "Larry"] //establishes loot pool
 
-while(true) {
-    if(inventoryArray < 3) {
+while(inventoryArray < 3) {
+    if(inventoryArray < 3) { //how the game determins if player has won
         while(player.living) { //initial while loop allowing the game to proceed only if player is alive
             if(player.hp <= 0) { //if player is dead, set player.living status to 'dead' and show this message
-                const continueResponse = readline.question("Do you want to continue? (yes/no)").toLowerCase();
-                if(continueResponse === "no") {
+                const continueResponse = readline.question("Do you want to continue? (y/n)").toLowerCase();
+                if(continueResponse === "n") {
                     player.living = false
                     console.log("Thou art dead")
                     break;
-                } else if(continueResponse === "yes") { // All other game interactions start here
+                } else if(continueResponse === "y") { // All other game interactions start here
                     const keydown = addEventListener('keydown',(event) => {
                     // console.log('Key Pressed: ', event.key);
                     // console.log('Key code: ', event.code);
                     if(event.key === 'p') { // Allows player to see their stats (the player object)
-                        print(player);
+                        console.log(player);
                     } else if(event.key === 'w') { //This is where interactions begin based on if the player decides to walk forward
                         console.log("w key was pressed")
-                        
-                    
-                    
-                    
-                    
-                    
-                    
-
-
-
-
-
+                        console.log("You begin walking...")
+                        const encounter = randomizeEncounter()
+                        if(encounter === 1) {
+                        const fightResponse = readline.question("An enemy appears, do you choose to fight or attempt an escape? fight/flight").toLowerCase();
+                            if (fightResponse === "fight"){
+                                fightFunc()
+                            } else if(fightResponse === "flight"){
+                                flightFunc()
+                            } else {
+                                console.log("Invalid response.")
+                            }
+                        } else {
+                            console.log("Keep walking.")
                         }
+                    } else {
+                        console.log("Invalid response.")
+                    }
                     })
                 } else {
-                    console.log("Wrong answer you fool. Please choose between yes or no") //correction
+                    console.log("Invalid response. Please choose between yes or no") //correction
                 }
             }
         }
     } else { //final message
         console.log("You have gathered all of the loot. You have finished your quest, o' great champion!")
-        break; //end loop/game
+        break; //end loop and game
         // process.exit(0) instead, but when I can get it to work
     }
 }
 
+function damageFunc() {
+    return Math.ceil(Math.random() * 10);
+}
 
+function fightFunc(){
+    let enemy = randomizeEnemy()
+    while(player.hp > 0 && enemyHP > 0) {
+        console.log("The Great " + enemy.enemyName + " appears for battle!")
+        enemyHP -= damageFunc()
+        console.log("The Great " + enemyName + "counter attacks.")
+        player.hp -= damageFunc()
+        console.log("You took a hit. Ouch. Your health is now at ${player.hp}")
+        if(enemyHP <= 0) {
+            const lootItem = inventoryArray.push(randomizeLoot)
+            console.log("You win! " + lootItem + "has been added to your inventory!")
+        } else if(player.hp <= 0) {
+            player.living = false
+            console.log("Thou art dead")
+            break;
+        }
+    }
+}
 
+function flightFunc(){
+    const escape = randomizeEscape()
+    if(escape === 1) {
+        console.log("You escaped. Keep walking forward.")
+    } else {
+        console.log("The enemy caught you. Your fight begins...")
+        fightFunc()
+    }
+}
 
+function randomizeEncounter() {
+    return Math.ceil(Math.random() * 3)
+}
 
-//         let inventoryArray = [2]
-//         let invCount = inventoryArray
+function randomizeEscape() {
+    return Math.ceil(Math.random() * 2);
+}
 
+function randomizeEnemy(){
+    return Math.random(enemyArray)
+}
 
-//         if(invCount === 3) {
-//             console.log("You have finished your quest, o' great champion!")
-//         }
-
-//         const enemyArray = [
-//             {enemyName: "John Pork", enemyHP: 10, enemySpell: "Pork Chop"},
-//             {enemyName: "Chicken Jockey", enemyHP: 10, enemySpell: "Impossible hitbox"},
-//             {enemyName: "Zalgaron, the Father of Fear", enemyHP: 10, enemySpell: "Scorpion on your ankle in your best friend's basement back in 2020"}
-//         ]
-
-//         const lootPool = ["A half of a ham and cheese sandwich", "Solace in the undeniable truth and inevitability of the universe's demise", "Larry"]
-
-//         function damageFunc() {
-//             console.log(Math.ceil(Math.random() * 10));
-//         }
-
-//         while(player.hp > 0 || enemyHP > 0) {
-//             fight
-//             damageFunc()
-
-            
-//         }
-// }});
-
-// function damageFunc() {
-//     console.log(Math.ceil(Math.random() * 10));
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function randomizeLoot(){
+    return Math.random(lootPool)
+}
 
 
 
