@@ -25,7 +25,7 @@ const enemyArray = [ //establishes enemy objects
 const lootPool = ["A half of a ham and cheese sandwich", "Solace in the undeniable truth and inevitability of the universe's demise", "Larry"] //establishes loot pool
 
 while(inventoryArray < 3) {
-    if(inventoryArray < 3) { //how the game determins if player has won
+    if(inventoryArray < 3) { //how the game determines if player has won
         while(player.living) { //initial while loop allowing the game to proceed only if player is alive
             if(player.hp <= 0) { //if player is dead, set player.living status to 'dead' and show this message
                 const continueResponse = readline.question("Do you want to continue? (y/n)").toLowerCase();
@@ -34,13 +34,11 @@ while(inventoryArray < 3) {
                     console.log("Thou art dead")
                     break;
                 } else if(continueResponse === "y") { // All other game interactions start here
-                    const keydown = addEventListener('keydown',(event) => {
-                    // console.log('Key Pressed: ', event.key);
-                    // console.log('Key code: ', event.code);
-                    if(event.key === 'p') { // Allows player to see their stats (the player object)
+                    
+                    const answer = readline.question("Press [w] to walk or press [p] to see stats")
+                    if(answer === 'p') { // Allows player to see their stats (the player object)
                         console.log(player);
-                    } else if(event.key === 'w') { //This is where interactions begin based on if the player decides to walk forward
-                        console.log("w key was pressed")
+                    } else if(answer === 'w') { //This is where interactions begin based on if the player decides to walk forward
                         console.log("You begin walking...")
                         const encounter = randomizeEncounter()
                         if(encounter === 1) {
