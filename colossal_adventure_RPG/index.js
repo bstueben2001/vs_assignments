@@ -2,10 +2,12 @@ const readline = require("readline-sync"); //activates readline-sync
 
 console.log("Welcome to your adventure that may or may not be colossal, friend!"); //beginning dialogue
 
-let playerName = readline.question("What do they call you?"); //setup game with playerName
+let playerName = readline.question("What do they call you? "); //setup game with playerName
 console.log("Greetings, " + playerName + "...we have a quest for you..."); //setup game
-console.log("..."); //setup game
-console.log("Press the 'W' key to walk towards your destiny..."); //setup game
+console.log("..."); //spacing
+// console.log("Press the 'W' key to walk towards your destiny..."); //setup game
+
+let inventoryArray = []
 
 let player = { //establishes player object
     name: playerName,
@@ -13,8 +15,6 @@ let player = { //establishes player object
     living: true,
     inv: inventoryArray
 }
-
-let inventoryArray = []
 
 const enemyArray = [ //establishes enemy objects
     {enemyName: "John Pork", enemyHP: 10, enemySpell: "Pork Chop"},
@@ -24,44 +24,23 @@ const enemyArray = [ //establishes enemy objects
 
 const lootPool = ["A half of a ham and cheese sandwich", "Solace in the undeniable truth and inevitability of the universe's demise", "Larry"] //establishes loot pool
 
-while(inventoryArray < 3) {
-    if(inventoryArray < 3) { //how the game determines if player has won
-        while(player.living) { //initial while loop allowing the game to proceed only if player is alive
+while(player.living && inventoryArray.length < 3) {
+    console.log(inventoryArray.length, "inventory")
+    if(inventoryArray.length < 3) { //how the game determines if player has won
             if(player.hp <= 0) { //if player is dead, set player.living status to 'dead' and show this message
                 const continueResponse = readline.question("Do you want to continue? (y/n)").toLowerCase();
                 if(continueResponse === "n") {
                     player.living = false
                     console.log("Thou art dead")
                     break;
-                } else if(continueResponse === "y") { // All other game interactions start here
-                    
-                    const answer = readline.question("Press [w] to walk or press [p] to see stats")
-                    if(answer === 'p') { // Allows player to see their stats (the player object)
-                        console.log(player);
-                    } else if(answer === 'w') { //This is where interactions begin based on if the player decides to walk forward
-                        console.log("You begin walking...")
-                        const encounter = randomizeEncounter()
-                        if(encounter === 1) {
-                        const fightResponse = readline.question("An enemy appears, do you choose to fight or attempt an escape? fight/flight").toLowerCase();
-                            if (fightResponse === "fight"){
-                                fightFunc()
-                            } else if(fightResponse === "flight"){
-                                flightFunc()
-                            } else {
-                                console.log("Invalid response.")
-                            }
-                        } else {
-                            console.log("Keep walking.")
-                        }
-                    } else {
-                        console.log("Invalid response.")
-                    }
-                    })
+                } else if(continueResponse === "y") { // All other game interactions start here       
+                   gameplayLoop();
                 } else {
                     console.log("Invalid response. Please choose between yes or no") //correction
                 }
+            } else {
+                gameplayLoop();
             }
-        }
     } else { //final message
         console.log("You have gathered all of the loot. You have finished your quest, o' great champion!")
         break; //end loop and game
@@ -70,20 +49,23 @@ while(inventoryArray < 3) {
 }
 
 function damageFunc() {
-    return Math.ceil(Math.random() * 10);
+    return Math.ceil(Math.random() * 5);
 }
 
 function fightFunc(){
     let enemy = randomizeEnemy()
-    while(player.hp > 0 && enemyHP > 0) {
-        console.log("The Great " + enemy.enemyName + " appears for battle!")
-        enemyHP -= damageFunc()
-        console.log("The Great " + enemyName + "counter attacks.")
+    console.log("The Great " + enemy.enemyName + " appears for battle!")
+    while(player.hp > 0 && enemy.enemyHP > 0) {
+        const playerHit = damageFunc()
+        enemy.enemyHP -= playerHit 
+        console.log("You hit the " + enemy.enemyName + " for " + playerHit + " damage")
+        console.log("The Great " + enemy.enemyName + " counter attacks.")
         player.hp -= damageFunc()
-        console.log("You took a hit. Ouch. Your health is now at ${player.hp}")
-        if(enemyHP <= 0) {
-            const lootItem = inventoryArray.push(randomizeLoot)
-            console.log("You win! " + lootItem + "has been added to your inventory!")
+        console.log("You took a hit. Ouch. Your health is now at " + player.hp)
+        if(enemy.enemyHP <= 0) {
+            const lootItem = randomizeLoot() 
+            inventoryArray.push(lootItem)
+            console.log("You win! " + lootItem + " has been added to your inventory!")
         } else if(player.hp <= 0) {
             player.living = false
             console.log("Thou art dead")
@@ -103,7 +85,7 @@ function flightFunc(){
 }
 
 function randomizeEncounter() {
-    return Math.ceil(Math.random() * 3)
+    return Math.ceil(Math.random() * 3);
 }
 
 function randomizeEscape() {
@@ -111,14 +93,38 @@ function randomizeEscape() {
 }
 
 function randomizeEnemy(){
-    return Math.random(enemyArray)
+    return enemyArray[Math.floor(Math.random() * enemyArray.length)];
 }
 
 function randomizeLoot(){
-    return Math.random(lootPool)
+    const loot = lootPool[Math.floor(Math.random() * lootPool.length)];
+    lootPool.splice(lootPool.indexOf(loot),1)
+    return loot
 }
 
-
+function gameplayLoop() {
+    const answer = readline.question("Press [w] to walk or press [p] to see stats ")
+        if(answer === 'p') { // Allows player to see their stats (the player object)
+            console.log(player);
+        } else if(answer === 'w') { //This is where interactions begin based on if the player decides to walk forward
+            console.log("You begin walking...")
+            const encounter = randomizeEncounter()
+            if(encounter === 1) {
+            const fightResponse = readline.question("An enemy appears, do you choose to fight or attempt an escape? fight/flight ").toLowerCase();
+                if (fightResponse === "fight"){
+                    fightFunc()
+                } else if(fightResponse === "flight"){
+                    flightFunc()
+                } else {
+                    console.log("Invalid response.")
+                }
+            } else {
+                console.log("Keep walking.")
+            }
+        } else {
+            console.log("Invalid response.")
+        }
+}
 
 //PSEUDOCODE
 
