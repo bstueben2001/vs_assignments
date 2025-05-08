@@ -93,14 +93,16 @@
 
 
 
-const btn1 = document.getElementById('clicker')
-const anchor = document.getElementById('anchor')
+const btn1 = document.getElementById('clicker');
+const anchor = document.getElementById('anchor');
 
-let clicks = 0
+let clicks = localStorage.getItem('clickCount') ? parseInt(localStorage.getItem('clickCount')) : 0;
+anchor.textContent = clicks;
 
 btn1.addEventListener('click',function(){
-    clicks++
-    anchor.textContent = clicks
-})
+    clicks++;
+    anchor.textContent = clicks;
+    localStorage.setItem('clickCount', clicks);
+});
 
 
